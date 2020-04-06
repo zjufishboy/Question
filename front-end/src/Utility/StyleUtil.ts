@@ -1,0 +1,1 @@
+export const styleMerge=(styles:string[])=>styles.join(" ")
