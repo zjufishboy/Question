@@ -6,7 +6,6 @@ export default () => {
     useEffect(()=>{
         let authCode= Utility.OtherUtility.getQueryVariable("code")
         if(authCode!=undefined){
-          console.log("前端收到：",authCode)
           let token   = Utility.NetworkUtility.getToken(authCode)
             .then(res=>{
               Utility.StoreUtility.setToken(res.info.data.token)

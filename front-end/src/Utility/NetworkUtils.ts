@@ -1,5 +1,6 @@
-import { ConfUtility } from "./utils"
+import { ConfUtility, StoreUtility } from "./utils"
 import { IObject } from '@/type/IObject'
+import { IQuestionare } from '@/type/IQuestionare'
 
 export const myFetch = (way:"POST"|"GET",url: string, data?: IObject) => {
     let requestInit:RequestInit = {
@@ -32,4 +33,19 @@ export const getToken=(authCode:string)=>{
 }
 export const getUserInfo=(token:string)=>{
     return myPost(ConfUtility.getUserInfoUrl(),{token}).then(res=>res.json())
+}
+export const getQuestionList=(token:string,status:number)=>{
+    return myPost(ConfUtility.getQuestionListUrl(),{token,status}).then(res=>res.json())
+}
+export const addQuestionList=(title:string,subTitle:string,token:string)=>{
+    return myPost(ConfUtility.getAddQuestionListUrl(),{title,subTitle,token}).then(res=>res.json())
+}
+export const getQuestion=(id:number)=>{
+    let token=StoreUtility.getToken()
+    return myPost(ConfUtility.getQuestionUrl(),{token,id}).then(res=>res.json())
+}
+export const updateQuestion=(id:number,newQuestion:IQuestionare)=>{
+    let token=StoreUtility.getToken()
+    return myPost(ConfUtility.getUpdateQuestionUrl(),{
+        token,id,newQuestion:JSON.stringify(newQuestion)}).then(res=>res.json())
 }

@@ -1,0 +1,63 @@
+.fullscreen{
+    width:100vw;
+    height:100vh;
+    background-color: #00000000;
+
+    position: fixed;
+    left:0;
+    top:0;
+    z-index: 3;
+}
+@keyframes bubble{
+    from {opacity: 0;display: none;}
+    to {opacity: 1;}
+}
+.NewQuestionOutside{
+    background-color: rgb(255, 255, 255);
+    z-index: 4;
+    border-radius: 0.1rem;
+    padding:0.1rem;
+    box-shadow: 0px 0px 2px #333333;
+}
+.animationShow{
+    animation: bubble 1s;
+}
+.animationHidden{
+    animation: bubble 1s reverse;
+}
+.NQtitle{
+    font-size: 0.12rem;
+    overflow: hidden;
+}
+.inputs{
+    outline: none;
+    border:1px solid #0095FF;
+    width:100%;
+}
+.inputOutSide{
+    width:100%;
+    margin:0.1rem 0.2rem;
+}
+.createButton{
+    width:50%;
+    height:28px;
+    background-color: #0095FF;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.cancelButton{
+    width:50%;
+    height:28px;
+    background-color: rgb(209, 209, 209);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.buttonBar{
+    width:100%;
+}

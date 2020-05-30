@@ -28,21 +28,17 @@ export const Navigation = (props: {
     </div>
   );
 };
-const UserInfo=()=>{
-  const [userName,setUserName]=useState("未登录")
-  useEffect(()=>{
-    let un=Utility.StoreUtility.getUserName()
-    setUserName(un)
-  },[])
+const UserInfo=(props:{name:string})=>{
   return (
     <div className={styles.userInfo}>
-      {userName}
+      {props.name}
     </div>
   )
   
 }
 export const NavigationManage = (props: {
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+  name:string
 }) => {
   return (
     <div>
@@ -56,7 +52,7 @@ export const NavigationManage = (props: {
       <Photo style={{ width: 32, height: 32, url: PhotoLogo2 }} />
       <span style={{marginLeft:12}}>游鱼星的问卷系统</span>
       </div>
-      <UserInfo/>
+      <UserInfo name={props.name}/>
     </div>
     <div className={styles.block}>
 

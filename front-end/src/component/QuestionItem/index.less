@@ -80,10 +80,27 @@
 }
 .Buttons{
     width:100%;
-    height:30px;
+    height:50px;
 }
 .button{
     width:100px;
     text-align: left;
     cursor: pointer;
+    position: relative;
+    height:30px;
+    bottom: 0;
+}
+.button:hover{
+    color:#0095FF;
+}
+.qrcode{
+    transition:opacity 1s ;
+    position: absolute;
+    bottom: -100px;
+}
+.show{
+    opacity: 1;
+}
+.hide{
+    opacity: 0;
 }

@@ -26,7 +26,10 @@ export const setToken=(token:string)=>{
     storeForQuestion.token=token;
     storeSave()
 }
-export const getToken=()=>storeForQuestion.token;
+export const getToken=()=>{
+    storeLoad()
+    return storeForQuestion.token;
+}
 
 export const setUserName=(userName:string)=>{
     storeForQuestion.userName=userName;

@@ -8,3 +8,11 @@ export const clientConf={
     redirect_uri:"http://localhost:8001",
     response_type: "code",                 //返回模式：code
 }
+
+export const userInfoUrl=["http://localhost:8000/userInfo","http://api.fishstar.xyz/account/userInfo"]
+export const getUserInfoUrl=()=>userInfoUrl[env==="debug"?0:1]
+
+export const mongodbUrl=["mongdb://localhost:39000","mongodb://api.fishstar.xyz:39000"]
+export const dbName="Question"
+export const getMongodbUrl=()=>mongodbUrl[env==="debug"?0:1]
+
