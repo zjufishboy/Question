@@ -4,7 +4,7 @@ import stylesCommon from '@/global.less';
 import {IProblem} from '@/type/IQuestionare';
 import { StyleUtility } from '@/Utility/utils';
 import { AddChoice, AddDepend } from './AddButton';
-export const ProblemRank=(props:{problem:IProblem,update:(newProblem:IProblem)=>void,delete:()=>void})=>{
+export const ProblemRank=(props:{problem:IProblem,update:(newProblem:IProblem)=>void,delete:()=>void,data:IProblem[],id:number})=>{
     const refTitle=createRef<HTMLInputElement>();
     const updateTitle=()=>{
         let newProblem:IProblem={...props.problem}
@@ -19,8 +19,11 @@ export const ProblemRank=(props:{problem:IProblem,update:(newProblem:IProblem)=>
         newProblem.must=newMust;
         props.update(newProblem);
     }
-    const addDepend=()=>{
+    const addDepend=(depend:{id:number,choice:number})=>{
         //TODO:依赖的具体实现
+        const newProblem={...props.problem}
+        newProblem.depend={...depend};
+        props.update(newProblem);
     }
     return(
         <div 
@@ -70,7 +73,7 @@ export const ProblemRank=(props:{problem:IProblem,update:(newProblem:IProblem)=>
                     styles.ButtonBar
                 ])}
             >
-                <AddDepend addDepend={addDepend}/>
+                <AddDepend addDepend={addDepend} select={props.problem.depend} data={props.data} id={props.id}/>
             </div>
         </div>
     );

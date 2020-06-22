@@ -22,28 +22,36 @@ export const question='/getQuestionList'
 export const addQuestion='/AddQuestion'
 export const getQuestion='/getQuestion'
 export const updateQuestion='/updateQuestion'
+export const operateQuestion='/operateQuestion'
+export const addAnswer='/addAnswer'
 
 export const getQuestionListUrl=()=>`${apiUrl}${question}`
 export const getQuestionUrl=()=>`${apiUrl}${getQuestion}`
 
 export const getAddQuestionListUrl=()=>`${apiUrl}${addQuestion}`
 export const getUpdateQuestionUrl=()=>`${apiUrl}${updateQuestion}`
+export const getOperateQuestionUrl=()=>`${apiUrl}${operateQuestion}`
+export const getAddAnswerUrl=()=>`${apiUrl}${addAnswer}`
 
 //其他配置
 
 //管理页面分类
 export const folders:IFolder[] = [
     {
-      icon: 'http://img.fishstar.xyz/question/file2.png',
-      name: '已发布',
-    },
-    {
       icon: 'http://img.fishstar.xyz/question/plane.png',
       name: '未发布',
     },
     {
+      icon: 'http://img.fishstar.xyz/question/file2.png',
+      name: '已发布',
+    },
+    {
       icon: 'http://img.fishstar.xyz/question/trash.png',
       name: '回收站',
+    },
+    {
+      icon: 'http://img.fishstar.xyz/question/file2.png',
+      name: '已停止',
     },
   ];
 //问卷状态：

@@ -6,16 +6,16 @@ import { StyleUtility } from '@/Utility/utils';
 import { ProblemChoice } from './problemChoice';
 import {ProblemBlank} from './ProblemBlank'
 import { ProblemRank } from './ProblemRank';
-export const ProblemDesign=(props:{problem:IProblem,update:(newProblem:IProblem)=>void,delete:()=>void})=>{
+export const ProblemDesign=(props:{problem:IProblem,update:(newProblem:IProblem)=>void,delete:()=>void,data:IProblem[],id:number})=>{
     switch(props.problem.types){
         case 0:
-            return <ProblemChoice problem={props.problem} update={props.update} delete={props.delete}/>
+            return <ProblemChoice problem={props.problem} update={props.update} delete={props.delete} data={props.data} id={props.id}/>
         case 1:
-            return <ProblemBlank problem={props.problem} update={props.update} delete={props.delete}/>
+            return <ProblemBlank problem={props.problem} update={props.update} delete={props.delete} data={props.data} id={props.id}/>
         case 2:
-            return <ProblemRank problem={props.problem} update={props.update} delete={props.delete} />
+            return <ProblemRank problem={props.problem} update={props.update} delete={props.delete} data={props.data} id={props.id}/>
         default:
-            return <ProblemRank problem={props.problem} update={props.update} delete={props.delete}/> 
+            return <ProblemRank problem={props.problem} update={props.update} delete={props.delete} data={props.data} id={props.id}/> 
     }
 }
 

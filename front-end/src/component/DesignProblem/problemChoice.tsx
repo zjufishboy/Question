@@ -50,7 +50,7 @@ const ChoiceDesign=(props:{content:string,update:(content:string)=>void,deleteCh
             
     )
 }
-export const ProblemChoice=(props:{problem:IProblem,update:(newProblem:IProblem)=>void,delete:()=>void})=>{
+export const ProblemChoice=(props:{problem:IProblem,update:(newProblem:IProblem)=>void,delete:()=>void,data:IProblem[],id:number})=>{
     const refTitle=createRef<HTMLInputElement>();
     const [choice,setChoice]=useState([] as string[]);
     useEffect(()=>{
@@ -103,8 +103,11 @@ export const ProblemChoice=(props:{problem:IProblem,update:(newProblem:IProblem)
         newProblem.must=newMust;
         props.update(newProblem);
     }
-    const addDepend=()=>{
+    const addDepend=(depend:{id:number,choice:number})=>{
         //TODO:依赖的具体实现
+        const newProblem={...props.problem}
+        newProblem.depend={...depend};
+        props.update(newProblem);
     }
     const updateChoicetype=()=>{
         let newProblem:IProblem={...props.problem}
@@ -176,8 +179,17 @@ export const ProblemChoice=(props:{problem:IProblem,update:(newProblem:IProblem)
                 ])}
             >
                 <AddChoice addChoice={addChoice}/>
-                <AddDepend addDepend={addDepend}/>
+                
             </div>
+            <div
+                className={StyleUtility.styleMerge([
+                    stylesCommon.scFlexRow,
+                    styles.ButtonBar
+                ])}
+            >
+                <AddDepend addDepend={addDepend} select={props.problem.depend} data={props.data} id={props.id}/>
+            </div>
+            
         </div>
     )
 

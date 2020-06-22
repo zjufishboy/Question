@@ -22,14 +22,16 @@ const RTE=(props:{data:IQuestionare,update:(data:IQuestionare)=>void,setPreviewO
         create(1),
         create(2),
         ()=>{props.setPreviewOnOff()},
-        ()=>{props.handOn()}
+        ()=>{props.handOn()},
+        ()=>{history.back()},
+        ()=>{alert("发布")}    
     ]
     
     const coverFunction=(item:string,idx:number)=>{
         let style:string=""
         switch(idx){
             case 0:style=styles.functionsLeft;break;
-            case 4:style=styles.functionsRight;break;
+            case 6:style=styles.functionsRight;break;
             default:style=styles.functions;break;
         }
         return (
@@ -50,7 +52,7 @@ const RTE=(props:{data:IQuestionare,update:(data:IQuestionare)=>void,setPreviewO
         
     }
     useEffect(()=>{
-        const Funct:string[]=["选择题","填空题","评分题","预览","提交"]
+        const Funct:string[]=["选择题","填空题","评分题","预览","保存","返回","发布"]
         setFunct(Funct)
     },[])
     return <div className={
@@ -78,7 +80,14 @@ export default (props:{data:IQuestionare,update:(data:IQuestionare)=>void,setPre
         props.update(newData)
     }
     const coverProblem=(item:IProblem,idx:number)=>(
-        <ProblemDesign problem={item} key={idx} update={updateProblem(idx)} delete={deleteProblem(idx)}/>
+        <ProblemDesign 
+            problem={item} 
+            key={idx} 
+            update={updateProblem(idx)} 
+            delete={deleteProblem(idx)} 
+            data={props.data.problem} 
+            id={idx}
+        />
     )
     return (
         <div 
@@ -129,7 +138,6 @@ export default (props:{data:IQuestionare,update:(data:IQuestionare)=>void,setPre
                         data.subtitle=newSubTitle?newSubTitle:"";
                         props.update(data)
                         let sheight=refSubTitle.current?.scrollHeight;
-                        console.log(sheight)
                         refSubTitle.current?.style.setProperty("height",sheight?`${sheight}px`:"auto");
                     }}
                     />

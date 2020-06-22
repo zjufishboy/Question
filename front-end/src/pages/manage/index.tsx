@@ -15,13 +15,15 @@ const QuestionList = (props:{classType:number}) => {
   const [data, setData] = useState([] as IQuestionare[] );
   useEffect(()=>{
     updateData()
-  },[])
+  },[props.classType])
   const updateData=()=>{
     let token=Utility.StoreUtility.getToken()
-    console.log({token})
     Utility.NetworkUtility.getQuestionList(token,props.classType).then(res=>{
       if(res.status){
         setData(res.info.data)
+      }
+      else{
+        setData([]);
       }
     })
   }
@@ -60,9 +62,9 @@ export default () => {
   },[])
   const handler=[
     ()=>{setNewQ(!newQ)},
-    ()=>{},
-    ()=>{},
-    ()=>{},
+    ()=>{setClassType(0)},
+    ()=>{setClassType(1)},
+    ()=>{setClassType(2)},
   ]
   const cancelDisplay=()=>{setNewQ(false)}
   return (

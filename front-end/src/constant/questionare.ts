@@ -1,0 +1,6 @@
+export enum QUESTION_STATUS{
+    UNPUBLISHED=0,
+    PUBLISHED=1,
+    DELETED=2,
+    STOP=3,
+}

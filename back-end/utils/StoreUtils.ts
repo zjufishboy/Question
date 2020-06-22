@@ -4,6 +4,7 @@ import { ConfUtility  } from "./utils";
 import { IObject } from '../type/IObject'
 import { IStatus } from '../type/IStatus'
 import { IQuestionare } from "../type/IQuestionare";
+import { IAnswer } from "../type/IAnswer";
 
 const MongoClient = mongodb.MongoClient;
 
@@ -174,4 +175,7 @@ export const getQuestionByID=(ID:number)=>{
 }
 export const updateQuestionByID=async(ID:number,newQuestion:IQuestionare)=>{
     return myUpdate({id:ID},newQuestion,"questionare");
+}
+export const addAnswer=async(answer:IAnswer)=>{
+    return myInsert(answer,"answer");
 }

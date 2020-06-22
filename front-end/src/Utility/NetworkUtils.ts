@@ -1,6 +1,8 @@
 import { ConfUtility, StoreUtility } from "./utils"
 import { IObject } from '@/type/IObject'
 import { IQuestionare } from '@/type/IQuestionare'
+import { QUESTION_STATUS } from '@/constant/questionare'
+import { IAnswer } from '@/type/IAnswer'
 
 export const myFetch = (way:"POST"|"GET",url: string, data?: IObject) => {
     let requestInit:RequestInit = {
@@ -48,4 +50,26 @@ export const updateQuestion=(id:number,newQuestion:IQuestionare)=>{
     let token=StoreUtility.getToken()
     return myPost(ConfUtility.getUpdateQuestionUrl(),{
         token,id,newQuestion:JSON.stringify(newQuestion)}).then(res=>res.json())
+}
+export const operateQuestion=(to:QUESTION_STATUS,id:number)=>{
+    let token=StoreUtility.getToken()
+    return myPost(ConfUtility.getOperateQuestionUrl(),{
+        token,id,status:to}).then(res=>res.json())
+}
+export const publishQuestion=(id:number)=>{
+    return operateQuestion(QUESTION_STATUS.PUBLISHED,id);
+}
+export const stopQuestion=(id:number)=>{
+    return operateQuestion(QUESTION_STATUS.STOP,id);
+}
+export const deleteQuestion=(id:number)=>{
+    return operateQuestion(QUESTION_STATUS.DELETED,id);
+}
+export const handOnAnswer=(id:number,answer:IAnswer)=>{
+    answer.QID=id;
+    answer.userID=-1;
+    answer.userIP="101.80.192.3";
+    let token=StoreUtility.getToken()
+    return myPost(ConfUtility.getAddAnswerUrl(),{
+        token,answer:JSON.stringify(answer)}).then(res=>res.json())
 }

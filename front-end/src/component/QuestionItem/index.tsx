@@ -1,24 +1,71 @@
 import React, { createRef, useEffect, useState } from 'react';
 import styles from './index.less';
 import stylesCommon from '@/global.less';
-import { StyleUtility, ConfUtility, OtherUtility } from '@/Utility/utils';
+import { StyleUtility, ConfUtility, OtherUtility, NetworkUtility } from '@/Utility/utils';
 import { IFolder } from '@/type/IFolder';
 import { Photo } from '../Photo';
 import { IQuestionare } from '@/type/IQuestionare';
 import { Link, history } from 'umi';
 import QRCode  from 'qrcode.react';
+import { QUESTION_STATUS } from '@/constant/questionare';
 
 
 const action=["发布问卷","暂停问卷","还原问卷","删除问卷"]
+
+
 export default (props: { data: IQuestionare;choice: number }) => {
-  const [show,setShow]=useState(false);
+  const getActions=()=>{
+    let functName=["发布问卷","删除问卷","停止问卷"]
+    const handler=[
+      ()=>(NetworkUtility.publishQuestion(props.data.id)),
+      ()=>(NetworkUtility.deleteQuestion(props.data.id)),
+      ()=>(NetworkUtility.stopQuestion(props.data.id)),
+    ]
+    let choice:number[]=[];
+    switch(props.data.status){
+      case QUESTION_STATUS.UNPUBLISHED:choice=[0,1];break;
+      case QUESTION_STATUS.PUBLISHED:choice=[1,2];break;
+      case QUESTION_STATUS.DELETED:choice=[0];break;
+      case QUESTION_STATUS.STOP:choice=[0];break;
+      default:break;
+    }
+    return choice.map(c=>({name:functName[c],funct:handler[c]}))
+  }
+  const coverFunction=(data:{name:string,funct:()=>Promise<any>},idx:number)=>(
+    <div className={
+      StyleUtility.styleMerge([
+        styles.button,
+        stylesCommon.csFlexColumn
+      ])}
+      key={idx+"funct"}
+      onClick={()=>{data.funct().then((res)=>{
+        if(res.status){
+          window.location.reload();
+        }
+        else{
+          alert("操作失败")
+        }
+      })}}
+    >
+      {data.name}
+      </div>
+  )
+  useEffect(()=>{
+    console.log(props.data);
+  })
   return(
-  <div
+    <div
+      className={StyleUtility.styleMerge([
+        stylesCommon.scFlexRow
+      ])}
+      style={{width:"100%"}}
+    >
+      <div
     className={StyleUtility.styleMerge([
       styles.QuestionListItem,
       stylesCommon.bcFlexColumn,
     ])}
-    style={{ display: props.data.status == props.choice ? '' : 'none' }}
+    style={{display: props.data.status == props.choice ? '' : 'none' }}
   >
     <div
       className={StyleUtility.styleMerge([
@@ -58,32 +105,7 @@ export default (props: { data: IQuestionare;choice: number }) => {
       >
         设计问卷
       </div>
-      <div
-        className={stylesCommon.nostatic}
-      >
-        <div className={
-          StyleUtility.styleMerge([
-            styles.button,
-            stylesCommon.csFlexColumn
-          ])}
-          onMouseEnter={()=>{setShow(true)}}
-          onMouseLeave={()=>{setShow(false)}}
-        >
-          {action[props.data.status]}
-          <QRCode
-            value={`http://question.fishstar.xyz/answer/${props.data.id}`}  //value参数为生成二维码的链接
-                size={100} //二维码的宽高尺寸
-                fgColor="#000000"  //二维码的颜色
-              className={
-                StyleUtility.styleMerge([
-                  styles.qrcode,
-                  show?styles.show:styles.hide
-                ])
-              }
-
-          />
-          </div>
-      </div>
+      {getActions().map(coverFunction)}
       <div className={
         StyleUtility.styleMerge([
           styles.button,
@@ -94,5 +116,18 @@ export default (props: { data: IQuestionare;choice: number }) => {
       </div>
     </div>
   </div>
+  <QRCode
+    value={`http://question.fishstar.xyz/answer/${props.data.id}`}  //value参数为生成二维码的链接
+                size={100} //二维码的宽高尺寸
+                fgColor="#000000"  //二维码的颜色
+              className={
+                StyleUtility.styleMerge([
+                  styles.qrcode,
+                ])
+              }
+          />
+    </div>
+  
 );
 }
+{/*  */}

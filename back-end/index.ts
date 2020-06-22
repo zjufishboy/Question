@@ -52,6 +52,8 @@ app.post(prefix+'/AddQuestion',NetworkUtility.addQuestion)
 app.post(prefix+'/getQuestion',NetworkUtility.getQuestion)
 app.post(prefix+'/updateQuestion',NetworkUtility.updateQuestion)
 app.post(prefix+'/deleteQuestion',NetworkUtility.deleteQuestion)
+app.post(prefix+'/operateQuestion',NetworkUtility.operateQuestion)
+app.post(prefix+'/addAnswer',NetworkUtility.handOnAnswer)
 
 //route
 

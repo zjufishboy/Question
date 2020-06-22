@@ -17,7 +17,7 @@ const MyInput=(props:{prefix:string,refs:any})=>{
         <input 
         className={styles.inputs}  
         ref={props.refs}
-        placeholder={focus?"":props.prefix}
+        placeholder={focus?"":" "+props.prefix}
         onFocus={()=>{setFocus(true)}}
         onBlur={()=>{setFocus(false)}}/>
       </div>
@@ -35,17 +35,23 @@ export const NewQuestion = (props:{
       let subTitle=refSubTitle.current?.value.toString();
       let Title=title?title:"";
       let SubTitle=subTitle?subTitle:"";
-      let token=Utility.StoreUtility.getToken();
-      Utility.NetworkUtility.addQuestionList(Title,SubTitle,token)
-      .then(res=>{
-        if(res.status){
-          window.location.reload()
-        }
-        else{
-          props.cancel({});
-          alert("创建失败")
-        }
-      })
+      if(Title && SubTitle){
+        let token=Utility.StoreUtility.getToken();
+        Utility.NetworkUtility.addQuestionList(Title,SubTitle,token)
+        .then(res=>{
+          if(res.status){
+            window.location.reload()
+          }
+          else{
+            props.cancel({});
+            alert("创建失败")
+          }
+        })
+      }
+      else{
+        alert("标题和副标题不能为空！");
+      }
+      
     }
   return (
     <div
